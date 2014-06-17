@@ -14,6 +14,17 @@
 		44DBC6C3194B34640067162C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44DBC6C1194B34640067162C /* Main.storyboard */; };
 		44DBC6C5194B34640067162C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44DBC6C4194B34640067162C /* Images.xcassets */; };
 		44DBC6D1194B34640067162C /* PlaneWarTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DBC6D0194B34640067162C /* PlaneWarTests.swift */; };
+		44DBC6E5194B34850067162C /* BurstAircraftPause.png in Resources */ = {isa = PBXBuildFile; fileRef = 44DBC6DA194B34850067162C /* BurstAircraftPause.png */; };
+		44DBC6E6194B34850067162C /* BurstAircraftPause@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 44DBC6DB194B34850067162C /* BurstAircraftPause@2x.png */; };
+		44DBC6E7194B34850067162C /* bullet.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44DBC6DD194B34850067162C /* bullet.mp3 */; };
+		44DBC6E8194B34850067162C /* enemy1_down.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44DBC6DE194B34850067162C /* enemy1_down.mp3 */; };
+		44DBC6E9194B34850067162C /* enemy2_down.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44DBC6DF194B34850067162C /* enemy2_down.mp3 */; };
+		44DBC6EA194B34850067162C /* enemy2_out.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44DBC6E0194B34850067162C /* enemy2_out.mp3 */; };
+		44DBC6EB194B34850067162C /* enemy3_down.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44DBC6E1194B34850067162C /* enemy3_down.mp3 */; };
+		44DBC6EC194B34850067162C /* game_music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44DBC6E2194B34850067162C /* game_music.mp3 */; };
+		44DBC6ED194B34850067162C /* game_over.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 44DBC6E3194B34850067162C /* game_over.mp3 */; };
+		44DBC6EE194B34850067162C /* textures.atlas in Resources */ = {isa = PBXBuildFile; fileRef = 44DBC6E4194B34850067162C /* textures.atlas */; };
+		44DBC6F0194B34F70067162C /* EnemyPlane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DBC6EF194B34F70067162C /* EnemyPlane.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +49,17 @@
 		44DBC6CA194B34640067162C /* PlaneWarTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlaneWarTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		44DBC6CF194B34640067162C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44DBC6D0194B34640067162C /* PlaneWarTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaneWarTests.swift; sourceTree = "<group>"; };
+		44DBC6DA194B34850067162C /* BurstAircraftPause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BurstAircraftPause.png; sourceTree = "<group>"; };
+		44DBC6DB194B34850067162C /* BurstAircraftPause@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "BurstAircraftPause@2x.png"; sourceTree = "<group>"; };
+		44DBC6DD194B34850067162C /* bullet.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = bullet.mp3; sourceTree = "<group>"; };
+		44DBC6DE194B34850067162C /* enemy1_down.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = enemy1_down.mp3; sourceTree = "<group>"; };
+		44DBC6DF194B34850067162C /* enemy2_down.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = enemy2_down.mp3; sourceTree = "<group>"; };
+		44DBC6E0194B34850067162C /* enemy2_out.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = enemy2_out.mp3; sourceTree = "<group>"; };
+		44DBC6E1194B34850067162C /* enemy3_down.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = enemy3_down.mp3; sourceTree = "<group>"; };
+		44DBC6E2194B34850067162C /* game_music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = game_music.mp3; sourceTree = "<group>"; };
+		44DBC6E3194B34850067162C /* game_over.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = game_over.mp3; sourceTree = "<group>"; };
+		44DBC6E4194B34850067162C /* textures.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = textures.atlas; sourceTree = "<group>"; };
+		44DBC6EF194B34F70067162C /* EnemyPlane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnemyPlane.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +101,11 @@
 		44DBC6B6194B34640067162C /* PlaneWar */ = {
 			isa = PBXGroup;
 			children = (
+				44DBC6EF194B34F70067162C /* EnemyPlane.swift */,
+				44DBC6DA194B34850067162C /* BurstAircraftPause.png */,
+				44DBC6DB194B34850067162C /* BurstAircraftPause@2x.png */,
+				44DBC6DC194B34850067162C /* sounds */,
+				44DBC6E4194B34850067162C /* textures.atlas */,
 				44DBC6B9194B34640067162C /* AppDelegate.swift */,
 				44DBC6BB194B34640067162C /* GameScene.sks */,
 				44DBC6BD194B34640067162C /* GameScene.swift */,
@@ -113,6 +140,20 @@
 				44DBC6CF194B34640067162C /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		44DBC6DC194B34850067162C /* sounds */ = {
+			isa = PBXGroup;
+			children = (
+				44DBC6DD194B34850067162C /* bullet.mp3 */,
+				44DBC6DE194B34850067162C /* enemy1_down.mp3 */,
+				44DBC6DF194B34850067162C /* enemy2_down.mp3 */,
+				44DBC6E0194B34850067162C /* enemy2_out.mp3 */,
+				44DBC6E1194B34850067162C /* enemy3_down.mp3 */,
+				44DBC6E2194B34850067162C /* game_music.mp3 */,
+				44DBC6E3194B34850067162C /* game_over.mp3 */,
+			);
+			path = sounds;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,8 +237,18 @@
 			buildActionMask = 2147483647;
 			files = (
 				44DBC6C5194B34640067162C /* Images.xcassets in Resources */,
+				44DBC6EB194B34850067162C /* enemy3_down.mp3 in Resources */,
 				44DBC6BC194B34640067162C /* GameScene.sks in Resources */,
+				44DBC6E8194B34850067162C /* enemy1_down.mp3 in Resources */,
+				44DBC6E6194B34850067162C /* BurstAircraftPause@2x.png in Resources */,
+				44DBC6EC194B34850067162C /* game_music.mp3 in Resources */,
+				44DBC6EA194B34850067162C /* enemy2_out.mp3 in Resources */,
+				44DBC6E9194B34850067162C /* enemy2_down.mp3 in Resources */,
+				44DBC6ED194B34850067162C /* game_over.mp3 in Resources */,
 				44DBC6C3194B34640067162C /* Main.storyboard in Resources */,
+				44DBC6E7194B34850067162C /* bullet.mp3 in Resources */,
+				44DBC6E5194B34850067162C /* BurstAircraftPause.png in Resources */,
+				44DBC6EE194B34850067162C /* textures.atlas in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -216,6 +267,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				44DBC6BE194B34640067162C /* GameScene.swift in Sources */,
+				44DBC6F0194B34F70067162C /* EnemyPlane.swift in Sources */,
 				44DBC6C0194B34640067162C /* GameViewController.swift in Sources */,
 				44DBC6BA194B34640067162C /* AppDelegate.swift in Sources */,
 			);
@@ -405,6 +457,7 @@
 				44DBC6D6194B34640067162C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		44DBC6D7194B34640067162C /* Build configuration list for PBXNativeTarget "PlaneWarTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +466,7 @@
 				44DBC6D9194B34640067162C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
