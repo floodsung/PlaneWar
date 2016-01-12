@@ -12,15 +12,21 @@ import SpriteKit
 extension SKNode {
     class func unarchiveFromFile(file : NSString) -> SKNode? {
         
-        let path = NSBundle.mainBundle().pathForResource(file, ofType: "sks")
+        let path = NSBundle.mainBundle().pathForResource(file as String, ofType: "sks")
         
-        var sceneData = NSData(contentsOfFile: path!, options: .DataReadingMappedIfSafe, error: nil)
-        var archiver = NSKeyedUnarchiver(forReadingWithData: sceneData!)
-        
-        archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
-        let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as GameScene
-        archiver.finishDecoding()
-        return scene
+        do {
+            let sceneData: NSData = try NSData(contentsOfFile: path!, options: NSDataReadingOptions.DataReadingMappedIfSafe)
+            let archiver = NSKeyedUnarchiver(forReadingWithData: sceneData)
+            
+            archiver.setClass(self.classForKeyedUnarchiver(), forClassName: "SKScene")
+            let scene = archiver.decodeObjectForKey(NSKeyedArchiveRootObjectKey) as! GameScene
+            archiver.finishDecoding()
+            return scene
+            
+        } catch {
+            
+        }
+        return nil
     }
 }
 
@@ -34,7 +40,7 @@ class GameViewController: UIViewController {
         
         if let scene = GameScene.unarchiveFromFile("GameScene") as? GameScene {
             // Configure the view.
-            let skView = self.view as SKView
+            let skView = self.view as! SKView
             skView.showsFPS = true
             skView.showsNodeCount = true
             
@@ -100,7 +106,7 @@ class GameViewController: UIViewController {
     }
     
     func pause(){
-        (view as SKView).paused = true
+        (view as! SKView).paused = true
         restartButton.hidden = false
         continueButton.hidden = false
         
@@ -110,7 +116,7 @@ class GameViewController: UIViewController {
         restartButton.hidden = true
         continueButton.hidden = true
         self.becomeFirstResponder()
-        (view as SKView).paused = false
+        (view as! SKView).paused = false
         NSNotificationCenter.defaultCenter().postNotificationName("restartNotification", object: nil)
         
     }
@@ -118,18 +124,18 @@ class GameViewController: UIViewController {
     func continueGame(button:UIButton){
         continueButton.hidden = true
         restartButton.hidden = true
-        (view as SKView).paused = false
+        (view as! SKView).paused = false
     }
    
     override func shouldAutorotate() -> Bool {
         return false
     }
 
-    override func supportedInterfaceOrientations() -> Int {
+    override func supportedInterfaceOrientations() -> UIInterfaceOrientationMask {
         if UIDevice.currentDevice().userInterfaceIdiom == .Phone {
-            return Int(UIInterfaceOrientationMask.Portrait.rawValue)
+            return UIInterfaceOrientationMask.Portrait
         } else {
-            return Int(UIInterfaceOrientationMask.All.rawValue)
+            return UIInterfaceOrientationMask.All
         }
     }
 
