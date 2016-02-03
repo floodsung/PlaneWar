@@ -41,7 +41,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
     func restart(){
         removeAllChildren()
         removeAllActions()
-
+        
         initBackground()
         initScoreLabel()
         initHeroPlane()
@@ -49,23 +49,18 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent)
-    {
-        let anyTouch : AnyObject! = touches.anyObject()
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let anyTouch : AnyObject! = (touches as NSSet).anyObject()
         let location = anyTouch.locationInNode(self)
-        
-        
         heroPlane.runAction(SKAction.moveTo(location, duration: 0.1))
-        
     }
     
-    override func touchesMoved(touches: NSSet, withEvent event: UIEvent)
-    {
-        let anyTouch : AnyObject! = touches.anyObject()
+    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        let anyTouch : AnyObject! = (touches as NSSet).anyObject()
         let location = anyTouch.locationInNode(self)
         heroPlane.runAction(SKAction.moveTo(location, duration: 0))
     }
-   
+    
     override func update(currentTime: CFTimeInterval) {
         /* Called before each frame is rendered */
     }
@@ -85,8 +80,8 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         // init background sprite
         
         for index in 0..<2 {
-            let backgroundSprite = SKSpriteNode(texture:backgroundTexture)
             
+            let backgroundSprite = SKSpriteNode(texture:backgroundTexture)
             backgroundSprite.position = CGPointMake(size.width/2,size.height / 2 + CGFloat(index) * backgroundSprite.size.height)
             backgroundSprite.zPosition = 0
             backgroundSprite.runAction(moveBackgroundForever)
@@ -99,7 +94,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         // set physics world
         physicsWorld.contactDelegate = self
         physicsWorld.gravity = CGVectorMake(0, 0)
-  
+        
     }
     
     func initActions()
@@ -114,7 +109,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         for i in 1...4 {
             smallPlaneBlowUpTexture.append(SKTexture(imageNamed:"enemy1_blowup_\(i)"))
         }
-        smallPlaneBlowUpAction = SKAction.sequence([SKAction.animateWithTextures(smallPlaneBlowUpTexture, timePerFrame: 0.1),SKAction.removeFromParent()])
+        smallPlaneBlowUpAction = SKAction.sequence([SKAction.animateWithTextures(smallPlaneBlowUpTexture, timePerFrame: 0.03),SKAction.removeFromParent()])
         
         // medium hit action
         var mediumPlaneHitTexture = [SKTexture]()
@@ -127,7 +122,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         for i in 1...4 {
             mediumPlaneBlowUpTexture.append(SKTexture(imageNamed:"enemy3_blowup_\(i)"))
         }
-        mediumPlaneBlowUpAction = SKAction.sequence([SKAction.animateWithTextures(mediumPlaneBlowUpTexture, timePerFrame: 0.1),SKAction.removeFromParent()])
+        mediumPlaneBlowUpAction = SKAction.sequence([SKAction.animateWithTextures(mediumPlaneBlowUpTexture, timePerFrame: 0.05),SKAction.removeFromParent()])
         
         // large hit action
         var largePlaneHitTexture = [SKTexture]()
@@ -148,7 +143,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             heroPlaneBlowUpTexture.append(SKTexture(imageNamed:"hero_blowup_\(i)"))
         }
         heroPlaneBlowUpAction = SKAction.sequence([SKAction.animateWithTextures(heroPlaneBlowUpTexture, timePerFrame: 0.1),SKAction.removeFromParent()])
-        
         
     }
     
@@ -177,7 +171,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         }
         
         scoreLabel.runAction(SKAction.runBlock({() in
-            self.scoreLabel.text = "\(self.scoreLabel.text.toInt()! + score)"}))
+            self.scoreLabel.text = "\(Int(self.scoreLabel.text!)! + score)"}))
         
     }
     
@@ -204,10 +198,9 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         
         // fire bullets
         let spawn = SKAction.runBlock{() in
-             self.createBullet()}
+            self.createBullet()}
         let wait = SKAction.waitForDuration(0.2)
         heroPlane.runAction(SKAction.repeatActionForever(SKAction.sequence([spawn,wait])))
-        
         
     }
     
@@ -250,11 +243,13 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         var type:EnemyPlaneType
         var speed:Float
         var enemyPlane:EnemyPlane
-        switch choose{
+        switch choose
+        {
         case 0..<75:
             type = .Small
             speed = Float(arc4random() % 3) + 2
             enemyPlane = EnemyPlane.createSmallPlane()
+            
         case 75..<97:
             type = .Medium
             speed = Float(arc4random() % 3) + 4
@@ -285,48 +280,48 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
         
     }
     
-    func didBeginContact(contact: SKPhysicsContact!)
+    func didBeginContact(contact: SKPhysicsContact)
     {
         
-            let enemyPlane = contact.bodyA.categoryBitMask & RoleCategory.EnemyPlane.rawValue == RoleCategory.EnemyPlane.rawValue ? contact.bodyA.node as EnemyPlane : contact.bodyB.node as EnemyPlane
+        let enemyPlane = (contact.bodyA.categoryBitMask & RoleCategory.EnemyPlane.rawValue) == RoleCategory.EnemyPlane.rawValue
+            ? (contact.bodyA.node as! EnemyPlane) : (contact.bodyB.node as! EnemyPlane)
+        
+        let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        if collision == RoleCategory.EnemyPlane.rawValue | RoleCategory.Bullet.rawValue
+        {
             
-            let collision = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-            if collision == RoleCategory.EnemyPlane.rawValue | RoleCategory.Bullet.rawValue{
-                
-                // hit bullet
-                let bullet = contact.bodyA.categoryBitMask & RoleCategory.Bullet.rawValue == RoleCategory.Bullet.rawValue ? contact.bodyA.node as SKSpriteNode : contact.bodyB.node as SKSpriteNode
-                
-                bullet.runAction(SKAction.removeFromParent())
-                
-                enemyPlaneCollision(enemyPlane)
-                
-                
-                
-            } else if collision == RoleCategory.EnemyPlane.rawValue | RoleCategory.HeroPlane.rawValue{
-                println("hit plane")
-                // hit hero plane
-                let heroPlane = contact.bodyA.categoryBitMask & RoleCategory.HeroPlane.rawValue == RoleCategory.HeroPlane.rawValue ? contact.bodyA.node as SKSpriteNode : contact.bodyB.node as SKSpriteNode
-                heroPlane.runAction(heroPlaneBlowUpAction,completion:{() in
-                    self.runAction(SKAction.sequence([
-                        SKAction.playSoundFileNamed("game_over.mp3", waitForCompletion: true),
-                        SKAction.runBlock({() in
-                            let label = SKLabelNode(fontNamed:"MarkerFelt-Thin")
-                            label.text = "GameOver"
-                            label.zPosition = 2
-                            label.fontColor = SKColor.blackColor()
-                            label.position = CGPointMake(self.size.width/2, self.size.height/2 + 20)
-                            self.addChild(label)
-                            })
-                        ])
+            // hit bullet
+            let bullet = contact.bodyA.categoryBitMask & RoleCategory.Bullet.rawValue == RoleCategory.Bullet.rawValue ? contact.bodyA.node as! SKSpriteNode : contact.bodyB.node as! SKSpriteNode
+            
+            bullet.runAction(SKAction.removeFromParent())
+            enemyPlaneCollision(enemyPlane)
+            
+        }
+        else if collision == RoleCategory.EnemyPlane.rawValue | RoleCategory.HeroPlane.rawValue
+        {
+            
+            print("hit plane")
+            // hit hero plane
+            let heroPlane = contact.bodyA.categoryBitMask & RoleCategory.HeroPlane.rawValue == RoleCategory.HeroPlane.rawValue ? contact.bodyA.node as! SKSpriteNode : contact.bodyB.node as! SKSpriteNode
+            heroPlane.runAction(heroPlaneBlowUpAction,completion:{() in
+                self.runAction(SKAction.sequence([
+                    SKAction.playSoundFileNamed("game_over.mp3", waitForCompletion: true),
+                    SKAction.runBlock({() in
+                        let label = SKLabelNode(fontNamed:"MarkerFelt-Thin")
+                        label.text = "GameOver"
+                        label.zPosition = 2
+                        label.fontColor = SKColor.blackColor()
+                        label.position = CGPointMake(self.size.width/2, self.size.height/2 + 20)
+                        self.addChild(label)
+                    })
+                    ])
                     ,completion:{() in
                         self.resignFirstResponder()
-                         NSNotificationCenter.defaultCenter().postNotificationName("gameOverNotification", object: nil)
-                       }
-                    )}
-                )
-            
-            }
-    
+                        NSNotificationCenter.defaultCenter().postNotificationName("gameOverNotification", object: nil)
+                    }
+                )}
+            )
+        }
     }
     
     func enemyPlaneCollision(enemyPlane:EnemyPlane)
@@ -344,7 +339,7 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             case .Medium:
                 enemyPlane.runAction(mediumPlaneHitAction)
             }
-
+            
         } else {
             switch enemyPlane.type{
             case .Small:
@@ -353,7 +348,6 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
                 runAction(SKAction.playSoundFileNamed("enemy1_down.mp3", waitForCompletion: false))
             case .Large:
                 changeScore(.Large)
-
                 enemyPlane.runAction(largePlaneBlowUpAction)
                 runAction(SKAction.playSoundFileNamed("enemy2_down.mp3", waitForCompletion: false))
             case .Medium:
@@ -363,5 +357,4 @@ class GameScene: SKScene,SKPhysicsContactDelegate {
             }
         }
     }
-
 }

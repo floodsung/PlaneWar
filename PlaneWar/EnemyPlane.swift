@@ -26,8 +26,8 @@ class EnemyPlane:SKSpriteNode {
         plane.type = EnemyPlaneType.Small
         plane.setScale(0.5)
         
-        plane.physicsBody = SKPhysicsBody(texture:planeTexture,size:plane.size)
-        //plane.physicsBody = SKPhysicsBody(rectangleOfSize: plane.size)
+        //plane.physicsBody = SKPhysicsBody(texture:planeTexture,size:plane.size)
+        plane.physicsBody = SKPhysicsBody(rectangleOfSize: plane.size)
         return plane
     }
     
